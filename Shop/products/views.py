@@ -1,6 +1,9 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Product, Category
+from traceback import format_exc
 
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Product, Category
+from .forms import ProductForm
+from django.contrib import messages
 
 def home(request):
     product_name = request.GET.get('product_name')
@@ -34,6 +37,18 @@ def home(request):
     return render(request, 'home.html', {'products': products, 'categories': categories})
 
 
-def product_detail(request):
+def product_detail(request, id):
     product = get_object_or_404(Product, id=id)
     return render(request, 'product_detail.html', {'product': product})
+
+
+def create_product(request):
+    form = ProductForm()
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.SUCCESS, 'Product Has Been Created Successfully')
+            return redirect('home')
+
+    return render(request, 'product_form.html', {'form': form})

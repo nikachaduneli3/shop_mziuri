@@ -10,10 +10,6 @@
         <label for="min_price" class="form-label">Min Price</label>
         <input type="number" class="form-control" id="min_price" name="min_price">
     </div>
-    <div class="col-6">
-        <label for="in_stock" class="form-label">In Stock</label>
-        <input type="checkbox" class="" id="in_stock" name="in_stock">
-    </div>
     <div class="col-md-3">
         <label for="max_price" class="form-label">Max Price</label>
         <input type="number" class="form-control" id="max_price" name="max_price">
@@ -23,9 +19,15 @@
         <select id="inputState" name="category" class="form-select">
             <option disabled selected>Choose...</option>
             {% for category in categories %}
-                <option value="{{ category.id }}"> {{ category.name }}</option>
+            <option value="{{ category.id }}"> {{ category.name }}</option>
             {% endfor %}
         </select>
+    </div>
+    <div class="col-6">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="in_stock" name="in_stock">
+      <label class="form-check-label" for="in_stock">In Stock</label>
+    </div>
     </div>
     <div class="col-12">
         <button type="submit" class="btn btn-primary">Search</button>
@@ -38,7 +40,7 @@
         {% for product in products %}
             <div class="col">
                 <div class="card" style="width: 18rem;">
-                    <img src="https://static.wikia.nocookie.net/shrek/images/5/5a/Shrek_superslam.png/revision/latest/scale-to-width-down/381?cb=20100927010617" class="card-img-top" alt="{{ product.name }}">
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ product.name }}</h5>
                         <p class="card-text fw-bold">{{ product.price }} $</p>
