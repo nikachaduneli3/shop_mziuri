@@ -1,54 +1,51 @@
-{% extends  'base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
+
 <form class="row g-3">
     <div class="col-md-6">
         <label for="product_name" class="form-label">Product Name</label>
-        <input type="text" class="form-control" id="product_name">
+        <input type="text" class="form-control" id="product_name" name="product_name">
     </div>
     <div class="col-md-3">
         <label for="min_price" class="form-label">Min Price</label>
-        <input type="number" class="form-control" id="min_price">
+        <input type="text" class="form-control" id="min_price" name="min_price">
     </div>
     <div class="col-md-3">
         <label for="max_price" class="form-label">Max Price</label>
-        <input type="number" class="form-control" id="max_price">
+        <input type="text" class="form-control" id="max_price" name="max_price">
+    </div>
+    <div class="col-md-6">
+        <label for="category" class="form-label">Category</label>
+        <select id="category" name="category" class="form-select">
+            <option disabled selected>Choose...</option>
+            {% for category in categories %}
+                <option value="{{category.id}}">{{category.name}}</option>
+            {% endfor %}
+        </select>
     </div>
     <div class="col-6">
         <label for="inputAddress" class="form-label">Address</label>
         <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-    </div>
-    <div class="col-md-6">
-        <label for="inputState" class="form-label">Category</label>
-        <select id="inputState" class="form-select">
-            <option selected>Choose...</option>
-            <option>Clothes</option>
-            <option>Shoes</option>
-            <option>Camping</option>
-            <option>Electronics</option>
-        </select>
     </div>
     <div class="col-12">
         <button type="submit" class="btn btn-primary">Search</button>
     </div>
 </form>
 
-
-<div class="container">
-    <div class="row row-cols-4 mt-3 g-3">
-        {% for product in products %}
-            <div class="col">
-                <div class="card" style="width: 18rem;">
-                    <img src="https://static.wikia.nocookie.net/shrek/images/5/5a/Shrek_superslam.png/revision/latest/scale-to-width-down/381?cb=20100927010617" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text fw-bold">{{ product.price }} $</p>
-                        <p class="card-text">{{ product.description }}</p>
-                        <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">Go somewhere</a>
-                    </div>
+<div class="row row-cols-4 mt-4 g-4">
+    {% for product in products %}
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <img src="https://m.media-amazon.com/images/M/MV5BZmU5ZDE5NTItN2I1YS00ZmFmLTk3YTgtNzQwOGNkYzFjOWRkXkEyXkFqcGdeQXVyNzU1NzE3NTg@._V1_QL75_UX500_CR0,47,500,281_.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{product.name}}</h5>
+                    <p class="card-text fw-bold">{{product.price}} $</p>
+                    <p class="card-text">{{product.description}}</p>
+                    <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">Go somewhere</a>
                 </div>
             </div>
-        {% endfor %}
-    </div>
+        </div>
+    {% endfor %}
 </div>
 {% endblock %}
