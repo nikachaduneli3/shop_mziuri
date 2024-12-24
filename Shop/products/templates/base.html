@@ -19,16 +19,22 @@
           <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
         </li>
         {% if user.is_authenticated %}
-          <li class="nav-item">
-            <a class="nav-link"  href="{% url 'logout_view' %}">Logout</a>
-          </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'create_product' %}">Create Product</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'cart_view' %}">Cart</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"  href="{% url 'logout_view' %}">Logout</a>
+        </li>
         {% else %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'register_view' %}">Register</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'login_view' %}">Login</a>
-          </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'register_view' %}">Register</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login_view' %}">Login</a>
+        </li>
         {% endif  %}
       </ul>
     </div>
@@ -36,12 +42,12 @@
 </nav>
 <div class="container">
   {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %} >{{ message }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
+  <ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %} >{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
   {% block content %}
 
   {% endblock %}

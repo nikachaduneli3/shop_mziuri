@@ -1,7 +1,7 @@
 from traceback import format_exc
 
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Product, Category
+from .models import Product, Category, Cart, CartItem
 from .forms import ProductForm
 from django.contrib import messages
 
@@ -52,3 +52,33 @@ def create_product(request):
             return redirect('home')
 
     return render(request, 'product_form.html', {'form': form})
+
+def update_product(request, id):
+    product = get_object_or_404(Product, id=id)
+    form = ProductForm(instance=product)
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.SUCCESS, 'Product Has Been Updated Successfully')
+            return redirect('home')
+    return render(request, 'product_form.html', {'form': form})
+
+def delete_product(request, id):
+    product = get_object_or_404(Product, id=id)
+    product.delete()
+    messages.add_message(request, messages.SUCCESS, 'Product Has Been Deleted Successfully')
+    return redirect('home')
+
+
+def cart_view(request):
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    return render(request, 'cart.html', {'cart': cart})
+
+
+
+def add_product_to_cart(request, id ):
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    product = Product.objects.get(id=id)
+    CartItem.objects.create(cart=cart, product=product)
+    return redirect('product_detail', id=id)
