@@ -80,5 +80,8 @@ def cart_view(request):
 def add_product_to_cart(request, id ):
     cart, created = Cart.objects.get_or_create(user=request.user)
     product = Product.objects.get(id=id)
-    CartItem.objects.create(cart=cart, product=product)
+    cart_item, created  = CartItem.objects.get_or_create(cart=cart, product=product)
+    if not created:
+        cart_item.qty += 1
+        cart_item.save()
     return redirect('product_detail', id=id)
